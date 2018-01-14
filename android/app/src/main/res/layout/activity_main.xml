@@ -27,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/id_button"
+        android:id="@+id/id_button_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/id_edit"
@@ -35,5 +35,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/id_recycler"
         android:text="SEND"/>
+
+    <Button
+        android:id="@+id/id_button_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/id_edit"
+        android:text="RECORD"/>
+
+    <Button
+        android:id="@+id/id_button_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/id_edit"
+        app:layout_constraintStart_toEndOf="@id/id_button_record"
+        android:text="PLAY"/>
 
 </android.support.constraint.ConstraintLayout>
