@@ -10,7 +10,7 @@ io.on('connection', function(socket) {
 	console.log('A user connected : ' + socket.id);
 	socket.on('message', function(data) {
 		console.log(data);
-		io.emit('message', { message: data });
+		io.emit('message', { type: data.type, content: data.content });
 	})
 	socket.on('disconnect', function() {
 		console.log("A user disconnected : " + socket.id);

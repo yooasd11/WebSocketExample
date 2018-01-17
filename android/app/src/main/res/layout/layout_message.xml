@@ -13,4 +13,10 @@
         android:layout_height="wrap_content"
         android:singleLine="true"/>
 
+    <Button
+        android:id="@+id/id_button_play_received"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLAY" />
+
 </LinearLayout>

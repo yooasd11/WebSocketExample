@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.yooas.websocketchatter.MainActivity">
 
+    <EditText
+        android:id="@+id/id_edit_server_ip"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/id_button_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/id_edit_server_ip"
+        android:text="CONNECT"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_recycler"
         android:layout_width="match_parent"
@@ -50,5 +62,13 @@
         app:layout_constraintTop_toBottomOf="@+id/id_edit"
         app:layout_constraintStart_toEndOf="@id/id_button_record"
         android:text="PLAY"/>
+
+    <Button
+        android:id="@+id/id_button_send_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/id_edit"
+        app:layout_constraintStart_toEndOf="@id/id_button_play"
+        android:text="SEND"/>
 
 </android.support.constraint.ConstraintLayout>
