@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsRecording = false
     private var mRecordedAudioPath: String = ""
     private var mReceivedAudioPath: String = ""
+
+    private lateinit var mHandler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         id_recycler.layoutManager = LinearLayoutManager(this)
         id_recycler.adapter = mAdapter
+
+        mHandler = object: Handler() {
+            override fun handleMessage(msg: android.os.Message) {
+                val size = msg.what.toFloat() / 200
+                id_circle.resize(size)
+            }
+        }
     }
 
     private fun sendMessage(type: Int, message: String) {
@@ -100,7 +110,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.id_button_record -> {
                 if (!mIsRecording) {
                     mIsRecording = true
-                    startRecording(mRecordedAudioPath)
+                    startRecording(mRecordedAudioPath, mHandler)
                     id_button_record.text = "STOP"
                     id_button_play.alpha = 0.1f
                     id_button_play.isClickable = false

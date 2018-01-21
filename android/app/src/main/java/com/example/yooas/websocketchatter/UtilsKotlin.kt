@@ -1,7 +1,10 @@
 package com.example.yooas.websocketchatter
 
 import android.media.*
+import android.os.Handler
+import android.os.Message
 import android.util.Base64
+import android.widget.Button
 import java.io.ByteArrayOutputStream
 import java.io.DataInputStream
 import java.io.FileInputStream
@@ -77,25 +80,35 @@ class UtilsKotlin {
             mIsRecording = false
         }
 
-        fun startRecording(recordedAudioPath: String) {
+        fun startRecording(recordedAudioPath: String, handler: Handler) {
             mRecorder = findAudioRecord()
             mRecorder!!.startRecording()
+            val data = ShortArray(mBufferSize)
             Thread({
-                writeAudioDataToFile(recordedAudioPath)
+                writeAudioDataToFile(data, recordedAudioPath)
+            }).start()
+            Thread({
+                sendVolumeToHandler(data, handler)
             }).start()
             mIsRecording = true
         }
 
-        fun writeAudioDataToFile(recordedAudioPath: String) {
-            val data = ShortArray(mBufferSize)
-
-            var fos: FileOutputStream = FileOutputStream(recordedAudioPath)
+        fun writeAudioDataToFile(data: ShortArray, recordedAudioPath: String) {
+            var fos = FileOutputStream(recordedAudioPath)
             while (mIsRecording) {
                 mRecorder!!.read(data, 0, mBufferSize)
                 val bData = Util.short2byte(data)
                 fos.write(bData, 0, mBufferSize * mBytesPerElement)
             }
             fos.close()
+        }
+
+        fun sendVolumeToHandler(data: ShortArray, handler: Handler) {
+            while (mIsRecording) {
+                if (data[0] > 0) {
+                    handler.sendEmptyMessage(data[0].toInt())
+                }
+            }
         }
 
         fun findAudioRecord(): AudioRecord? {
